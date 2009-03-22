@@ -11,3 +11,19 @@ class Object
     end
   end
 end
+
+module ActiveRecord
+  module RailsExt
+
+    module ClassMethods
+      def blank?
+        count == 0
+      end
+
+      alias empty? blank?
+    end
+
+  end
+end
+
+ActiveRecord::Base.extend ActiveRecord::RailsExt::ClassMethods
