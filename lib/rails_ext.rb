@@ -28,9 +28,8 @@ end
 
 ActiveRecord::Base.extend ActiveRecord::RailsExt::ClassMethods
 
-module ActiveRecord
-  class Base
-   protected
+class ActiveRecord::Base
+  class << self
     def scoped_methods #:nodoc:
       Thread.current[:"#{self}_scoped_methods"] ||= (self.default_scoping || []).dup
     end
