@@ -16,14 +16,14 @@ class Array
   def odd
     new_guy = self.class.new
     self.each_with_index {|item,n| new_guy << item if n % 2 == 1 }
-  
+
     new_guy
   end
 
   def even
     new_guy = self.class.new
     self.each_with_index {|item,n| new_guy << item if n % 2 == 0 }
-  
+
     new_guy
   end
 end
@@ -51,3 +51,30 @@ class ActiveRecord::Base
     end
   end
 end
+
+class ActiveRecord::Errors
+  def remove(k)
+    @errors.delete(k)
+  end
+end
+
+class ActiveRecord::Errors
+  def full_messages
+    full_messages = []
+
+    @errors.each_key do |attr|
+      @errors[attr].each do |msg|
+        next if msg.nil?
+
+        if attr == "base" || msg =~ /^[[:upper:]]/
+          full_messages << msg
+        else
+          full_messages << @base.class.human_attribute_name(attr) + " " + msg
+        end
+      end
+    end
+    full_messages
+  end
+end
+
+
