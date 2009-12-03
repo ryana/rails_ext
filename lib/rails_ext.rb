@@ -12,6 +12,22 @@ class Object
   end
 end
 
+class Array
+  def odd
+    new_guy = self.class.new
+    self.each_with_index {|item,n| new_guy << item if n % 2 == 1 }
+  
+    new_guy
+  end
+
+  def even
+    new_guy = self.class.new
+    self.each_with_index {|item,n| new_guy << item if n % 2 == 0 }
+  
+    new_guy
+  end
+end
+
 module ActiveRecord
   module RailsExt
 
