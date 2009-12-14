@@ -66,10 +66,17 @@ class ActiveRecord::Errors
       @errors[attr].each do |msg|
         next if msg.nil?
 
-        if attr == "base" || msg =~ /^[[:upper:]]/
-          full_messages << msg
+        msg_text = case msg
+                   when ActiveRecord::Error
+                     msg.message
+                   else
+                     msg.to_s
+                  end
+
+        if attr == "base" || msg_text =~ /^[[:upper:]]/
+          full_messages << msg_text
         else
-          full_messages << @base.class.human_attribute_name(attr) + " " + msg
+          full_messages << @base.class.human_attribute_name(attr) + " " + msg_text
         end
       end
     end
